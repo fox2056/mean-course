@@ -1,5 +1,6 @@
 <mat-card>
-  <form (submit)="onAddPost(postForm)" #postForm="ngForm">
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form (submit)="onSavePost(postForm)" #postForm="ngForm" *ngIf="!isLoading">
     <mat-card-title>Добавить объявление</mat-card-title>
     <mat-form-field>
       <input 
@@ -7,7 +8,7 @@
         type="text"
         name="title"
         placeholder="Название объявления"
-        ngModel
+        [ngModel]="post?.title"
         required
         minlength="3"
         #title="ngModel">
@@ -20,7 +21,7 @@
         rows="6"
         name="content"
         placeholder="Описание объявления"
-        ngModel
+        [ngModel]="post?.content"
         required
         #content="ngModel"></textarea>
         <mat-error *ngIf="content.invalid ">Добавь описание объявления.</mat-error>

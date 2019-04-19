@@ -4,7 +4,7 @@
 
 
 $my-theme-primary: mat-palette($mat-cyan);
-$my-theme-accent:  mat-palette($mat-pink, A200, A100, A400);
+$my-theme-accent:  mat-palette($mat-deep-purple, A200, A100, A400);
 $my-theme-warn:    mat-palette($mat-red);
 
 $my-theme: mat-light-theme($my-theme-primary, $my-theme-accent, $my-theme-warn);
