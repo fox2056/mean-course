@@ -1,9 +1,18 @@
 <mat-toolbar color="primary">
-   <span><a routerLink="/">Объявления</a></span>
-   <span class="spacer"></span>
-   <ul>
-       <li>
-           <a mat-button routerLink="/create" routerLinkActive="mat-accent">Добавить</a>
-       </li>
-   </ul>
+    <span><a routerLink="/">Объявления</a></span>
+    <span class="spacer"></span>
+    <ul>
+        <li *ngIf="userIsAuthenticated">
+            <a mat-button routerLink="/create" routerLinkActive="mat-accent">Добавить</a>
+        </li>
+        <li *ngIf="!userIsAuthenticated">
+            <a mat-button routerLink="/login" routerLinkActive="mat-accent">Войти</a>
+        </li>
+        <li *ngIf="!userIsAuthenticated">
+            <a mat-button routerLink="/signup" routerLinkActive="mat-accent">Регистрация</a>
+        </li>
+        <li *ngIf="userIsAuthenticated">
+            <button mat-button (click)="onLogout()">Выйти</button>
+        </li>
+    </ul>
 </mat-toolbar>
