@@ -14,12 +14,14 @@ router.post("/signup", (req, res, next) => {
     });
     user.save().then(result => {
       res.status(201).json({
-        message: "User is registered.",
+        message: "Пользователь зарегестрирован.",
         result: result
       });
     })
     .catch(err => {
-        res.status(500).json({ error: err });
+        res.status(500).json({ 
+            message: 'Не подходящие данные! Пользователь с таким адресом уже зарегистрирован.'
+        });
     });
   });
 });
@@ -30,7 +32,7 @@ router.post('/login', (req, res, next) => {
     .then(user => {
       if (!user) {
         return res.status(401).json({ 
-          message: 'Auth failed.'
+          message: 'Пользователя с такой комбинацией почты и пароля не существует.'
         });
       }
       fetchedUser = user;
@@ -39,7 +41,7 @@ router.post('/login', (req, res, next) => {
     .then(result => {
       if (!result) {
         return res.status(401).json({ 
-          message: 'Auth failed.'
+          message: 'Пользователя с такой комбинацией почты и пароля не существует.'
         });
       }
       const token = jwt.sign({
@@ -57,7 +59,7 @@ router.post('/login', (req, res, next) => {
     })
     .catch(err => {
       return res.status(401).json({ 
-        message: 'Auth failed.'
+        message: 'Пользователя с такой комбинацией почты и пароля не существует.'
       });
     });
 });

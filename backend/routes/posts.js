@@ -15,7 +15,7 @@ const MIME_TYPE_MAP = {
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const isValid = MIME_TYPE_MAP[file.mimetype];
-    let error = new Error("Invalid mime type.");
+    let error = new Error("Не подходящие расширение файла.");
     if (isValid) {
       error = null;
     }
@@ -51,6 +51,9 @@ router.post(
           id: createdPost._id
         }
       });
+    })
+    .catch(error => { 
+      res.status(500).json({ message: 'Что то пошло не так в процессе создания объявления.'})
     });
   }
 );
@@ -74,10 +77,13 @@ router.put(
     });
     Post.updateOne({ _id: req.params.id, creator: req.userData.userId }, post).then(result => {
       if (result.nModified > 0) {
-        res.status(200).json({ message: "Update successful." });
+        res.status(200).json({ message: "Изменения сохранены." });
       } else {
-        res.status(401).json({ message: "Don't have permission for editing this post." });
+        res.status(401).json({ message: "У вас нет полномочий редактировать объявление." });
       }
+    })
+    .catch(error => {
+      res.status(500).json({ message: 'Что то пошло не так, не возможно сохранить изменения.'})
     });
   }
 );
@@ -97,10 +103,13 @@ router.get("", (req, res, next) => {
     })
     .then(count => {
       res.status(200).json({
-        message: "Posts fetchet succesfully!",
+        message: "Объявление загружены!",
         posts: fetchedPosts,
         maxPosts: count
       });
+    })
+    .catch(error => {
+      res.status(500).json({ message: 'Что то пошло не так, объявления не были загружены.'})
     });
 });
 
@@ -109,18 +118,24 @@ router.get("/:id", (req, res, next) => {
     if (post) {
       res.status(200).json(post);
     } else {
-      res.status(404).json({ message: "Post not found!" });
+      res.status(404).json({ message: "Объявление не найдено!" });
     }
+  })
+  .catch(error => {
+    res.status(500).json({ message: 'Что то пошло не так, объявление не было загружено.'})
   });
 });
 
 router.delete("/:id", checkAuth, (req, res, next) => {
   Post.deleteOne({ _id: req.params.id, creator: req.userData.userId }).then(result => {
     if (result.n > 0) {
-      res.status(200).json({ message: "Post deleted." });
+      res.status(200).json({ message: "Объявление удалено." });
     } else {
-      res.status(401).json({ message: "Don't have permission for deleting this post." });
+      res.status(401).json({ message: "У вас нет полномочий удалить объявление." });
     }
+  })
+  .catch(error => {
+    res.status(500).json({ message: 'Что то пошло не так, объявление не было загружено.'})
   });
 });
 
