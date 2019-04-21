@@ -10,7 +10,7 @@ import { AuthService } from '../auth.service';
 export class SignupComponent implements OnInit {
 
   isLoading = false;
-
+  
   constructor(public authService: AuthService) { }
 
   ngOnInit() {
