@@ -13,7 +13,7 @@ const MIME_TYPE_MAP = {
       if (isValid) {
         error = null;
       }
-      cb(null, "backend/images");
+      cb(null, "images");
     },
     filename: (req, file, cb) => {
       const name = file.originalname
