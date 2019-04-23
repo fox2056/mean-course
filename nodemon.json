@@ -1,6 +1,0 @@
-{
-    "env": {
-        "MONGO_ATLAS_PW": "rBWQcmUQh3aUqyQT",
-        "JWT_KEY": "secret-for-development-app"
-    }
-}
