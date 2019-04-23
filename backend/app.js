@@ -10,7 +10,7 @@ const app = express();
 
 mongoose
   .connect(
-    "mongodb+srv://olek:rBWQcmUQh3aUqyQT@cluster0-jjhi1.mongodb.net/meanapp",
+    "mongodb+srv://olek:" + process.env.MONGO_ATLAS_PW + "@cluster0-jjhi1.mongodb.net/meanapp",
     { useNewUrlParser: true }
   )
   .then(() => {
